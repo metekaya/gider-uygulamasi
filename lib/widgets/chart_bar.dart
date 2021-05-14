@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gider_uyg/widgets/chart.dart';
 
 class ChartBar extends StatelessWidget {
   final String label;

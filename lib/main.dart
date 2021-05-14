@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Gider Uygulaması',
       theme: ThemeData(
         primarySwatch: Colors.amber,
@@ -64,11 +65,11 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  void _addNewTransaction(String txTitle, double txMiktar) {
+  void _addNewTransaction(String txTitle, double txMiktar, DateTime chosenDate) {
     final newTx = Transaction(
       title: txTitle,
       miktar: txMiktar,
-      tarih: DateTime.now(),
+      tarih: chosenDate,
       id: DateTime.now().toString(),
     );
 
@@ -84,6 +85,12 @@ class _MyHomePageState extends State<MyHomePage> {
         return NewTransaction(_addNewTransaction);
       },
     );
+  }
+
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((tx) => tx.id == id);
+    });
   }
 
   @override
@@ -106,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Chart(_recentTransactions),
-            TransactionList(_userTransactions),
+            TransactionList(_userTransactions, _deleteTransaction),
           ],
         ),
       ),
